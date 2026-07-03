@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Traveldeal B2B Clone | Travel Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+  <!-- ===================== AUTH GATE (shown first) ===================== -->
+  <div id="authGate" class="auth-gate">
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Traveldeal B2B home">
+        <span class="brand-mark">T</span>
+        <span><strong>TRAVELDEAL</strong><small>B2B</small></span>
+      </a>
+    </header>
+
+    <section class="hero auth-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">B2B travel distribution platform</p>
+        <h1>Next Generation B2B Travel Solutions</h1>
+        <p class="subtitle">Friendly. Reliable. Professional.</p>
+        <p>Please log in or register to access fares, bookings and agent tools.</p>
+      </div>
+
+      <aside class="login-panel" aria-label="Agent authentication">
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab is-active" data-tab="login">Login</button>
+          <button type="button" class="auth-tab" data-tab="register">Register</button>
+        </div>
+
+        <form id="loginForm" class="auth-form is-active" data-panel="login">
+          <label>
+            Email
+            <input type="email" placeholder="Enter Your Email" required />
+          </label>
+          <label>
+            Password
+            <input type="password" placeholder="Enter Your Password" required />
+          </label>
+          <div class="login-options">
+            <label class="check"><input type="checkbox" /> Remember Me</label>
+            <button type="button" class="text-button" id="forgotBtn">Forgot Password</button>
+          </div>
+          <button class="btn btn-login" type="submit">Login</button>
+          <p id="loginStatus" class="status-text" role="status"></p>
+        </form>
+
+        <form id="registerForm" class="auth-form" data-panel="register">
+          <label>
+            Agency Name
+            <input id="regAgencyName" type="text" placeholder="Agency Name" required />
+          </label>
+          <label>
+            Business Email
+            <input id="regEmail" type="email" placeholder="Business Email" required />
+          </label>
+          <label>
+            Mobile Number
+            <input id="regMobile" type="tel" placeholder="Mobile Number" required />
+          </label>
+          <label>
+            Password
+            <input id="regPassword" type="password" placeholder="Choose a Password" required />
+          </label>
+          <button class="btn btn-danger" type="submit">Register &amp; Continue</button>
+          <p id="registerStatus" class="status-text" role="status"></p>
+        </form>
+      </aside>
+    </section>
+  </div>
+
+  <!-- ===================== MAIN SITE (shown after login) ===================== -->
+  <div id="siteContent" class="is-hidden">
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Traveldeal B2B home">
+        <span class="brand-mark">T</span>
+        <span><strong>TRAVELDEAL</strong><small>B2B</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a href="#services">Services</a>
+        <a href="#fares">Deals</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="agent-cta">
+        <span id="welcomeAgent"></span>
+        <button class="btn btn-ghost" id="logoutBtn" type="button">Logout</button>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">B2B travel distribution platform</p>
+          <h1>Next Generation B2B Travel Solutions</h1>
+          <p class="subtitle">Friendly. Reliable. Professional.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#booking">Book a Demo Fare</a>
+            <a class="btn btn-ghost" href="#services">Explore Services</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="services-band">
+        <div class="section-heading">
+          <p class="eyebrow">what we provide</p>
+          <h2>Fast tools for travel professionals</h2>
+        </div>
+        <div class="service-grid">
+          <article>
+            <span>Flights</span>
+            <strong>Domestic and international fares with agent-friendly margins.</strong>
+          </article>
+          <article>
+            <span>Hotels</span>
+            <strong>Curated stays, instant quotes, and easy voucher handling.</strong>
+          </article>
+          <article>
+            <span>Packages</span>
+            <strong>Ready itineraries for families, groups, and corporate travel.</strong>
+          </article>
+          <article>
+            <span>Visa</span>
+            <strong>Documentation support and clear application status tracking.</strong>
+          </article>
+        </div>
+      </section>
+
+      <section id="fares" class="fare-section">
+        <div class="section-heading compact">
+          <p class="eyebrow">special fares</p>
+          <h2>Popular B2B deals</h2>
+        </div>
+
+        <div class="fare-search">
+          <input
+            id="flightSearch"
+            type="search"
+            placeholder="Search by city, airport code, or airline (e.g. Dubai, DXB, IndiGo)"
+            aria-label="Search flights"
+          />
+          <span id="flightSearchCount" class="fare-search-count"></span>
+        </div>
+
+        <div class="fare-grid" id="fareGrid">
+          <button class="fare-card is-active" data-service="Australia Special Fare" data-route="ATQ to SYD" data-amount="2499900" data-airline="Scoot Airlines" data-origin="Amritsar" data-destination="Sydney">
+            <span class="tag">Scoot Airlines</span>
+            <strong>ATQ to SYD</strong>
+            <small>From INR 24,999</small>
+          </button>
+          <button class="fare-card" data-service="Dubai Group Fare" data-route="DEL to DXB" data-amount="1899900" data-airline="Emirates" data-origin="Delhi" data-destination="Dubai">
+            <span class="tag">Group Deal</span>
+            <strong>DEL to DXB</strong>
+            <small>From INR 18,999</small>
+          </button>
+          <button class="fare-card" data-service="Thailand Holiday Fare" data-route="BOM to BKK" data-amount="2199900" data-airline="Thai Airways" data-origin="Mumbai" data-destination="Bangkok">
+            <span class="tag">Holiday</span>
+            <strong>BOM to BKK</strong>
+            <small>From INR 21,999</small>
+          </button>
+          <button class="fare-card" data-service="Singapore Business Fare" data-route="DEL to SIN" data-amount="2799900" data-airline="Singapore Airlines" data-origin="Delhi" data-destination="Singapore">
+            <span class="tag">Business</span>
+            <strong>DEL to SIN</strong>
+            <small>From INR 27,999</small>
+          </button>
+          <button class="fare-card" data-service="London Value Fare" data-route="BOM to LHR" data-amount="4599900" data-airline="British Airways" data-origin="Mumbai" data-destination="London">
+            <span class="tag">Long Haul</span>
+            <strong>BOM to LHR</strong>
+            <small>From INR 45,999</small>
+          </button>
+          <button class="fare-card" data-service="Mumbai to Delhi Domestic" data-route="BOM to DEL" data-amount="499900" data-airline="IndiGo" data-origin="Mumbai" data-destination="Delhi">
+            <span class="tag">Domestic</span>
+            <strong>BOM to DEL</strong>
+            <small>From INR 4,999</small>
+          </button>
+          <button class="fare-card" data-service="Bangalore to Goa Weekend" data-route="BLR to GOI" data-amount="349900" data-airline="SpiceJet" data-origin="Bangalore" data-destination="Goa">
+            <span class="tag">Weekend</span>
+            <strong>BLR to GOI</strong>
+            <small>From INR 3,499</small>
+          </button>
+          <button class="fare-card" data-service="Kuala Lumpur Explorer" data-route="MAA to KUL" data-amount="1699900" data-airline="AirAsia" data-origin="Chennai" data-destination="Kuala Lumpur">
+            <span class="tag">Explorer</span>
+            <strong>MAA to KUL</strong>
+            <small>From INR 16,999</small>
+          </button>
+          <button class="fare-card" data-service="Maldives Honeymoon Fare" data-route="COK to MLE" data-amount="1999900" data-airline="Maldivian" data-origin="Kochi" data-destination="Male">
+            <span class="tag">Honeymoon</span>
+            <strong>COK to MLE</strong>
+            <small>From INR 19,999</small>
+          </button>
+          <button class="fare-card" data-service="New York Corporate Fare" data-route="DEL to JFK" data-amount="6599900" data-airline="Air India" data-origin="Delhi" data-destination="New York">
+            <span class="tag">Corporate</span>
+            <strong>DEL to JFK</strong>
+            <small>From INR 65,999</small>
+          </button>
+          <button class="fare-card" data-service="Nepal Pilgrimage Fare" data-route="DEL to KTM" data-amount="899900" data-airline="IndiGo" data-origin="Delhi" data-destination="Kathmandu">
+            <span class="tag">Pilgrimage</span>
+            <strong>DEL to KTM</strong>
+            <small>From INR 8,999</small>
+          </button>
+          <button class="fare-card" data-service="Hyderabad to Chennai Hop" data-route="HYD to MAA" data-amount="299900" data-airline="Vistara" data-origin="Hyderabad" data-destination="Chennai">
+            <span class="tag">Domestic</span>
+            <strong>HYD to MAA</strong>
+            <small>From INR 2,999</small>
+          </button>
+          <button class="fare-card" data-service="Paris Getaway Fare" data-route="BOM to CDG" data-amount="4899900" data-airline="Air France" data-origin="Mumbai" data-destination="Paris">
+            <span class="tag">Getaway</span>
+            <strong>BOM to CDG</strong>
+            <small>From INR 48,999</small>
+          </button>
+          <button class="fare-card" data-service="Bali Island Fare" data-route="DEL to DPS" data-amount="2399900" data-airline="Garuda Indonesia" data-origin="Delhi" data-destination="Bali">
+            <span class="tag">Island</span>
+            <strong>DEL to DPS</strong>
+            <small>From INR 23,999</small>
+          </button>
+          <button class="fare-card" data-service="Istanbul Stopover Fare" data-route="DEL to IST" data-amount="3299900" data-airline="Turkish Airlines" data-origin="Delhi" data-destination="Istanbul">
+            <span class="tag">Stopover</span>
+            <strong>DEL to IST</strong>
+            <small>From INR 32,999</small>
+          </button>
+          <button class="fare-card" data-service="Kolkata to Guwahati Regional" data-route="CCU to GAU" data-amount="399900" data-airline="Alliance Air" data-origin="Kolkata" data-destination="Guwahati">
+            <span class="tag">Regional</span>
+            <strong>CCU to GAU</strong>
+            <small>From INR 3,999</small>
+          </button>
+        </div>
+
+        <p id="fareNoResults" class="fare-no-results is-hidden">No flights match your search. Try a different city, airport code, or airline.</p>
+      </section>
+
+      <!-- ===================== STEP 2: Passenger / traveller details (airline-style) ===================== -->
+      <section id="passengerDetails" class="passenger-section is-hidden">
+        <div class="section-heading compact">
+          <p class="eyebrow">step 2 of 3 &middot; traveller information</p>
+          <h2>Passenger &amp; travel details</h2>
+          <p id="passengerFareSummary" class="passenger-fare-summary"></p>
+        </div>
+
+        <form id="passengerForm" class="passenger-form">
+          <div class="passenger-form-grid">
+            <label>
+              Date of travel
+              <input id="travelDate" type="date" required />
+            </label>
+            <label>
+              Class of travel
+              <select id="travelClass" required>
+                <option value="Economy">Economy</option>
+                <option value="Premium Economy">Premium Economy</option>
+                <option value="Business">Business</option>
+                <option value="First Class">First Class</option>
+              </select>
+            </label>
+            <label>
+              Number of passengers
+              <select id="passengerCount"></select>
+            </label>
+          </div>
+
+          <div id="passengerRows" class="passenger-rows"></div>
+
+          <div class="section-heading compact passenger-subheading">
+            <h3>Contact &amp; billing details</h3>
+          </div>
+          <div class="passenger-form-grid">
+            <label>
+              Contact email
+              <input id="contactEmail" type="email" placeholder="agent@example.com" required />
+            </label>
+            <label>
+              Contact mobile
+              <input id="contactMobile" type="tel" placeholder="10-digit mobile number" pattern="[0-9]{10}" required />
+            </label>
+            <label>
+              GSTIN (optional, for invoice)
+              <input id="gstin" type="text" placeholder="Optional" />
+            </label>
+          </div>
+
+          <label class="full-width">
+            Special requests <span class="optional-tag">(meal, wheelchair, seat preference — optional)</span>
+            <textarea id="specialRequests" rows="2" placeholder="Any special assistance the airline should know about"></textarea>
+          </label>
+
+          <div class="passenger-form-actions full-width">
+            <button class="btn btn-ghost" type="button" id="backToFaresBtn">&larr; Back to fares</button>
+            <button class="btn btn-primary" type="submit">Continue to Payment</button>
+          </div>
+          <p id="passengerStatus" class="status-text full-width" role="status"></p>
+        </form>
+      </section>
+
+      <!-- ===================== STEP 3: Secure payment ===================== -->
+      <section id="booking" class="booking-band is-hidden">
+        <form id="bookingForm" class="booking-form">
+          <div>
+            <p class="eyebrow">step 3 of 3 &middot; secure checkout</p>
+            <h2>Book selected fare</h2>
+          </div>
+
+          <div id="bookingSummary" class="booking-summary"></div>
+
+          <input id="travellerName" type="hidden" value="Demo Travel Agency" />
+          <input id="routeName" type="hidden" value="ATQ to SYD" />
+          <input id="amountPaise" type="hidden" value="2499900" />
+          <input id="serviceName" type="hidden" value="Australia Special Fare" />
+
+          <button class="btn btn-ghost" type="button" id="editDetailsBtn">&larr; Edit passenger details</button>
+          <button class="btn btn-primary" type="submit">Pay with Razorpay</button>
+          <p id="paymentStatus" class="status-text" role="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer id="contact" class="site-footer">
+      <div>
+        <h2>Talk to Our Experts</h2>
+        <p>SCO 171, 2nd Floor, Sector 37 (C), Chandigarh 160036, India</p>
+        <p>0172-3549800 | support@traveldealb2b.co</p>
+        <p>Monday to Saturday, 10:00 AM to 06:30 PM</p>
+      </div>
+      <form class="newsletter" id="newsletterForm">
+        <label for="newsletterEmail">Newsletter</label>
+        <input id="newsletterEmail" type="email" placeholder="Your Email Address" required />
+        <button class="btn btn-light" type="submit">Subscribe</button>
+      </form>
+    </footer>
+  </div>
+
+  <script>
+    window.RAZORPAY_KEY_ID = "{{ razorpay_key_id }}";
+  </script>
+  <script src="/static/script.js"></script>
+</body>
+</html>
