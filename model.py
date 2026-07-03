@@ -1,12 +1,10 @@
 import re
 
-
 class EmotionModel:
     """
     Baseline rule-based emotion detector.
     Replace this with your real ML model if available.
     """
-
     def __init__(self, mode='baseline'):
         self.mode = mode
 

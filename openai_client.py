@@ -1,7 +1,6 @@
 from openai import OpenAI
 from config import settings
 
-
 class OpenAIChat:
     def __init__(self, api_key: str, model: str, system_prompt: str):
         if not api_key:

@@ -1,6 +1,5 @@
 import random
 
-
 class ResponseEngine:
     def reply_for(self, label: str, text: str) -> str:
         label = (label or "neutral").lower()

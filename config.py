@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 @dataclass(frozen=True)
 class Settings:
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
@@ -16,6 +15,5 @@ class Settings:
         "You are a helpful mental wellness assistant. Be empathetic, supportive, and concise. "
         "If user expresses self-harm thoughts, encourage reaching professional help immediately."
     )
-
 
 settings = Settings()

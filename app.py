@@ -124,8 +124,7 @@ def create_order():
     special_requests = data.get("specialRequests", "")
 
     lead_pax = passengers[0]
-    lead_pax_name = f"{lead_pax.get('title', '')} {lead_pax.get('firstName', '')} {lead_pax.get('lastName', '')}".strip(
-    )
+    lead_pax_name = f"{lead_pax.get('title', '')} {lead_pax.get('firstName', '')} {lead_pax.get('lastName', '')}".strip()
 
     client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
     receipt = f"tdb2b_{uuid.uuid4().hex[:20]}"
@@ -210,5 +209,4 @@ def health():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    debug_mode = os.environ.get("FLASK_DEBUG", "false").lower() == "true"
-    app.run(host="0.0.0.0", port=port, debug=debug_mode)
+    app.run(host="0.0.0.0", port=port, debug=True)

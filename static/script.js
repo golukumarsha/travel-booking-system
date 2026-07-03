@@ -58,26 +58,19 @@ function showSite(agent) {
   authGate.classList.add("is-hidden");
   siteContent.classList.remove("is-hidden");
   welcomeAgent.textContent = agent ? `Welcome, ${agent.agency_name}` : "";
-  // localStorage (not sessionStorage) so the agent stays logged in even
-  // after closing the tab or the whole browser — only Logout clears it.
-  if (agent) localStorage.setItem("agent", JSON.stringify(agent));
+  if (agent) sessionStorage.setItem("agent", JSON.stringify(agent));
 }
 
 function showGate() {
   siteContent.classList.add("is-hidden");
   authGate.classList.remove("is-hidden");
-  localStorage.removeItem("agent");
+  sessionStorage.removeItem("agent");
 }
 
-// Nothing but the login/register gate is shown until we confirm a saved
-// login exists — the agent only ever sees the rest of the site after that.
-const savedAgent = localStorage.getItem("agent");
+// If the agent already logged in earlier this browser session, skip the gate.
+const savedAgent = sessionStorage.getItem("agent");
 if (savedAgent) {
-  try {
-    showSite(JSON.parse(savedAgent));
-  } catch (error) {
-    showGate();
-  }
+  showSite(JSON.parse(savedAgent));
 } else {
   showGate();
 }
