@@ -16,7 +16,7 @@ load_dotenv()
 
 DATABASE_URL = os.environ.get(
     "DATABASE_URL",
-    "postgresql://myapp_user:jWFWzKIVq5xV9U1Qv01JKch84S8yWuq0@dpg-d8n8ume7r5hc73ahlang-a/travellIDEA"
+    "postgresql://myapp_user:jWFWzKIVq5xV9U1Qv01JKch84S8yWuq0@dpg-d8n8ume7r5hc73ahlang-a/TravellIDEL"
 )
 
 
